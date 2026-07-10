@@ -3,361 +3,923 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>모닝브루 | 망원동 동네 카페</title>
-  <meta name="description" content="망원동 골목 끝 작은 카페 모닝브루. 매일 아침 직접 내리는 핸드드립 커피와 당일 구운 수제 스콘을 만나보세요." />
+  <title>모닝브루 · 망원동 출근길 픽업 커피</title>
+  <meta name="description" content="망원동 출근길 카페 모닝브루. 출근 전 미리 주문하고, 도착하면 기다림 없이 바로 픽업하세요." />
   <style>
     :root {
-      --bg: #fdf9f3;
-      --card: #ffffff;
-      --ink: #3a3027;
-      --ink-soft: #6b5d4f;
-      --line: #ece2d4;
-      --brand: #c8703c;
-      --brand-dark: #a85826;
-      --accent: #6b8e5a;
-      --shadow: 0 8px 28px rgba(90, 60, 30, 0.08);
+      --bg: #f4ece1;
+      --card: #fffaf3;
+      --coffee: #6f4e37;
+      --coffee-dark: #4b3524;
+      --cream: #e8d9c3;
+      --accent: #c8875a;
+      --danger: #b4593f;
+      --text: #3a2c22;
+      --muted: #97836f;
+      --shadow: 0 8px 24px rgba(90, 62, 40, 0.12);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Malgun Gothic", -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, #f8f1e6, transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
 
     html { scroll-behavior: smooth; }
 
-    body {
-      font-family: "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    /* 상단 내비게이션 (소개·예약 페이지 공통) */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 250, 243, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--cream);
     }
-
-    .wrap {
-      width: 100%;
-      max-width: 720px;
+    .nav-inner {
+      max-width: 960px;
       margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ===== Hero ===== */
-    .hero {
-      text-align: center;
-      padding: 72px 20px 56px;
-      background: linear-gradient(160deg, #fff6ec 0%, #fdf9f3 100%);
-      border-bottom: 1px solid var(--line);
-    }
-    .hero .badge {
-      display: inline-block;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: var(--brand);
-      background: #fbeadb;
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-    .hero h1 {
-      font-size: 44px;
-      letter-spacing: -1px;
-      margin-bottom: 14px;
-      line-height: 1.2;
-    }
-    .hero p {
-      font-size: 18px;
-      color: var(--ink-soft);
-      max-width: 420px;
-      margin: 0 auto 28px;
-    }
-    .cta-row {
+      padding: 12px 20px;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      justify-content: center;
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--coffee-dark);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       flex-wrap: wrap;
     }
-    .btn {
-      display: inline-block;
-      padding: 14px 26px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
+    .nav-links a {
       text-decoration: none;
-      transition: transform .12s ease, box-shadow .12s ease;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 11px;
+      border-radius: 8px;
+      transition: background .15s, color .15s;
     }
-    .btn:active { transform: translateY(1px); }
-    .btn-primary {
-      background: var(--brand);
-      color: #fff;
-      box-shadow: 0 6px 16px rgba(200, 112, 60, 0.32);
+    .nav-links a:hover { color: var(--coffee-dark); background: var(--cream); }
+    .nav-cta {
+      background: linear-gradient(180deg, var(--coffee), var(--coffee-dark));
+      color: #fff5e9 !important;
     }
-    .btn-primary:hover { background: var(--brand-dark); }
-    .btn-secondary {
-      background: #fff;
-      color: var(--brand-dark);
-      border: 2px solid var(--brand);
-    }
-    .btn-email {
-      background: #fff;
-      color: var(--brand-dark);
-      border: 2px solid var(--line);
-    }
-    .btn-email:hover { border-color: var(--brand); }
+    .nav-cta:hover { filter: brightness(1.08); background: var(--coffee-dark); }
 
-    /* ===== Sections ===== */
-    section { padding: 48px 0; }
-    .section-title {
-      font-size: 26px;
+    #menu-section { scroll-margin-top: 72px; }
+
+    header {
       text-align: center;
-      margin-bottom: 8px;
+      padding: 48px 20px 28px;
     }
-    .section-sub {
-      text-align: center;
-      color: var(--ink-soft);
-      margin-bottom: 32px;
+
+    header .cup { font-size: 44px; }
+
+    header .eyebrow {
+      margin: 10px 0 0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      margin: 6px 0 10px;
+      font-size: 30px;
+      line-height: 1.3;
+      color: var(--coffee-dark);
+      letter-spacing: -0.5px;
+    }
+
+    header .tagline {
+      margin: 0 auto;
+      max-width: 460px;
+      color: var(--muted);
       font-size: 15px;
     }
 
-    /* ===== Features ===== */
-    .features {
-      display: grid;
-      gap: 14px;
-      grid-template-columns: 1fr;
+    /* 이용 방법 3단계 */
+    .steps {
+      list-style: none;
+      margin: 22px auto 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 12px;
     }
-    .feature {
+
+    .steps li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       background: var(--card);
-      border: 1px solid var(--line);
+      border: 1px solid var(--cream);
+      border-radius: 999px;
+      padding: 8px 16px 8px 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--coffee-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .steps li span {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--coffee), var(--coffee-dark));
+      color: #fff5e9;
+      font-size: 13px;
+    }
+
+    .layout {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--cream);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 19px;
+      color: var(--coffee-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--coffee);
+      margin: 14px 0 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--cream);
+      border-radius: 10px;
+      font-size: 15px;
+      background: #fffdf9;
+      color: var(--text);
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    /* 메뉴 선택 드롭다운 */
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236f4e37' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200, 135, 90, 0.18);
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+    }
+
+    .btn-add {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      background: linear-gradient(180deg, var(--coffee), var(--coffee-dark));
+      color: #fff5e9;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: transform .1s, filter .15s;
+    }
+
+    .btn-add:hover { filter: brightness(1.08); }
+    .btn-add:active { transform: translateY(1px); }
+
+    .list-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .list-header h2 { margin: 0; }
+
+    .list-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .count {
+      font-size: 13px;
+      color: var(--muted);
+      background: var(--cream);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .btn-reset {
+      padding: 6px 13px;
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid rgba(180, 89, 63, 0.35);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .15s, color .15s, opacity .15s;
+    }
+
+    .btn-reset:hover { background: var(--danger); color: #fff; }
+
+    .btn-reset:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .btn-reset:disabled:hover { background: transparent; color: var(--danger); }
+
+    ul { list-style: none; margin: 0; padding: 0; }
+
+    .reservation {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--cream);
+      border-radius: 12px;
+      background: #fffdf9;
+      margin-bottom: 12px;
+    }
+
+    .res-info { flex: 1; min-width: 0; }
+
+    .res-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--coffee-dark);
+    }
+
+    .res-meta {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+    }
+
+    .btn-del {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid rgba(180, 89, 63, 0.35);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .15s, color .15s;
+    }
+
+    .btn-del:hover { background: var(--danger); color: #fff; }
+
+    .empty {
+      text-align: center;
+      padding: 44px 20px;
+      color: var(--muted);
+    }
+
+    .empty .icon { font-size: 40px; display: block; margin-bottom: 12px; }
+
+    /* 유효성 오류 메시지 */
+    .error-msg {
+      display: none;
+      color: var(--danger);
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    input.invalid, select.invalid {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(180, 89, 63, 0.15);
+    }
+
+    .field.show-error .error-msg { display: block; }
+
+    .btn-add:disabled {
+      filter: grayscale(0.3) brightness(0.95);
+      cursor: default;
+    }
+
+    /* 성공 안내 토스트 */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #3f7d52;
+      color: #f2fbf4;
+      padding: 13px 22px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 10px 28px rgba(45, 92, 58, 0.32);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s, transform .3s;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* 오늘의 메뉴 */
+    .menu-band { padding: 8px 20px 4px; }
+
+    .menu-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .menu-inner h2 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      color: var(--coffee-dark);
+    }
+
+    .menu-inner .menu-sub {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      text-align: left;
+    }
+
+    .menu-item {
+      background: var(--card);
+      border: 1px solid var(--cream);
       border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-item .m-emoji { font-size: 26px; }
+    .menu-item .m-name { font-weight: 700; color: var(--coffee-dark); font-size: 15px; }
+    .menu-item .m-desc { font-size: 12.5px; color: var(--muted); flex: 1; }
+    .menu-item .m-price { font-weight: 700; color: var(--accent); margin-top: 6px; }
+
+    /* 히어로 사업 이름 + 예약 CTA */
+    header .brand-name {
+      margin: 6px 0 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--coffee-dark);
+      letter-spacing: -0.3px;
+    }
+
+    .btn-hero {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 15px 30px;
+      background: linear-gradient(180deg, var(--coffee), var(--coffee-dark));
+      color: #fff5e9;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(90, 62, 40, 0.28);
+      transition: transform .1s, filter .15s;
+    }
+    .btn-hero:hover { filter: brightness(1.08); }
+    .btn-hero:active { transform: translateY(1px); }
+
+    /* 공통 섹션 제목 */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 20px 8px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 22px;
+      color: var(--coffee-dark);
+      margin: 0 0 4px;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 20px;
+    }
+
+    /* 영업·픽업 안내 + 위치·연락 카드 그리드 */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--cream);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
       padding: 20px;
       display: flex;
       gap: 14px;
       align-items: flex-start;
     }
-    .feature .ico { font-size: 26px; line-height: 1; }
-    .feature h3 { font-size: 17px; margin-bottom: 4px; }
-    .feature p { font-size: 14px; color: var(--ink-soft); }
+    .info-card .i-ico { font-size: 24px; line-height: 1; }
+    .info-card .i-label {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .info-card .i-value { font-size: 15px; color: var(--text); font-weight: 600; }
+    .info-card .i-value a { color: var(--coffee-dark); text-decoration: none; }
+    .info-card .i-value a:hover { text-decoration: underline; }
+    .info-card .i-note { color: var(--accent); }
 
-    /* ===== Menu cards ===== */
-    .menu-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1fr;
-    }
-    .menu-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .menu-card .name { font-size: 18px; font-weight: 700; }
-    .menu-card .desc { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
-    .menu-card .price {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--brand-dark);
-      white-space: nowrap;
-    }
-
-    /* ===== Info (location & hours) ===== */
-    .info-box {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-    }
-    .info-row {
-      display: flex;
-      gap: 14px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .info-row:last-child { border-bottom: none; }
-    /* 영업시간 행 — 여백을 넉넉히, 배경은 은은한 노란색 톤으로 */
-    .info-row.hours {
-      background: #fdf3d0;
-      border: 1px solid #f2e3a8;
-      border-radius: 14px;
-      padding: 24px 22px;
-      margin-top: 8px;
-    }
-    .info-row .ico { font-size: 22px; }
-    .info-row .label { font-size: 13px; color: var(--ink-soft); margin-bottom: 2px; }
-    .info-row .value { font-size: 16px; font-weight: 600; }
-    .info-row .value .closed { color: var(--brand); font-weight: 700; }
-
-    /* ===== Contact ===== */
-    .contact {
-      text-align: center;
-      background: linear-gradient(160deg, #fff6ec 0%, #fbeadb 100%);
-      border-radius: 20px;
-      padding: 44px 24px;
-      margin: 0 20px;
-    }
-    .contact h2 { font-size: 24px; margin-bottom: 10px; }
-    .contact p { color: var(--ink-soft); margin-bottom: 28px; }
-    .contact .cta-row {
-      flex-direction: column;
-      max-width: 340px;
-      margin: 0 auto 6px;
-    }
-    /* 예약·연락 버튼을 크고 선명하게 */
-    .contact .btn {
-      width: 100%;
-      padding: 18px 26px;
-      font-size: 17px;
-    }
-    .contact .btn-primary {
-      box-shadow: 0 8px 22px rgba(200, 112, 60, 0.42);
-    }
-    @media (min-width: 600px) {
-      .contact .cta-row { flex-direction: row; max-width: none; }
-    }
-
-    /* ===== Footer ===== */
+    /* 푸터 */
     footer {
       text-align: center;
-      padding: 36px 20px 48px;
-      color: var(--ink-soft);
+      padding: 40px 20px 48px;
+      color: var(--muted);
       font-size: 13px;
     }
-    footer .brand { font-weight: 700; color: var(--ink); }
+    footer .f-brand { font-weight: 700; color: var(--coffee-dark); }
 
-    /* ===== Desktop ===== */
-    @media (min-width: 600px) {
-      .hero h1 { font-size: 56px; }
-      .features { grid-template-columns: 1fr 1fr; }
-      .menu-grid { grid-template-columns: 1fr 1fr; }
+    /* 브랜드 약속 3가지 */
+    .promise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    #about, #hours, #reserve, #location { scroll-margin-top: 72px; }
+
+    @media (max-width: 720px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      header { padding-top: 28px; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .info-grid { grid-template-columns: 1fr; }
+      .promise-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-
-  <!-- 1. 첫 화면 -->
-  <header class="hero">
-    <span class="badge">망원동 동네 카페</span>
-    <h1>모닝브루</h1>
-    <p>매일 아침, 정성껏 손으로 내린 커피 한 잔.<br />오늘도 당신의 하루를 조용히 응원합니다.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="tel:02-123-4567">📞 전화하기</a>
-      <a class="btn btn-secondary" href="https://instagram.com/morningbrew_official" target="_blank" rel="noopener">인스타그램</a>
-      <a class="btn btn-email" href="mailto:hello@morningbrew.example.com">✉️ 이메일 문의</a>
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#top">☕ 모닝브루</a>
+      <div class="nav-links">
+        <a href="#about">소개</a>
+        <a href="#menu-section">메뉴</a>
+        <a href="#hours">영업안내</a>
+        <a href="#location">오시는 길</a>
+        <a class="nav-cta" href="#reserve">픽업 예약하기</a>
+      </div>
     </div>
+  </nav>
+
+  <header id="top">
+    <span class="cup">☕</span>
+    <p class="brand-name">모닝브루</p>
+    <p class="eyebrow">망원동 직장인을 위한 출근길 커피</p>
+    <h1>출근 전 미리 주문하고,<br />도착하면 바로 픽업하세요</h1>
+    <p class="tagline">바쁜 아침, 카페 앞에 줄 설 필요 없이 — 원하는 시간에 딱 맞춰 준비해 둘게요.</p>
+    <a class="btn-hero" href="#reserve">☕ 픽업 예약하기</a>
+    <ul class="steps">
+      <li><span>1</span> 픽업 시간 예약</li>
+      <li><span>2</span> 출근길에 방문</li>
+      <li><span>3</span> 기다림 없이 픽업</li>
+    </ul>
   </header>
 
-  <!-- 특징 -->
-  <section>
-    <div class="wrap">
-      <h2 class="section-title">모닝브루가 지키는 것들</h2>
-      <p class="section-sub">작은 가게지만, 매일 변함없이 지켜온 세 가지 약속입니다</p>
-      <div class="features">
-        <div class="feature">
-          <span class="ico">☕</span>
-          <div>
-            <h3>한 잔 한 잔, 손으로 내립니다</h3>
-            <p>기계에 맡기지 않고 주문마다 정성껏 핸드드립으로 내려 드려요.</p>
-          </div>
+  <!-- 소개 · 모닝브루가 지키는 것들 -->
+  <section class="section" id="about">
+    <h2 class="section-title">모닝브루가 지키는 것들</h2>
+    <p class="section-sub">작은 가게지만, 매일 변함없이 지켜온 세 가지 약속입니다</p>
+    <div class="promise-grid">
+      <div class="info-card">
+        <span class="i-ico">☕</span>
+        <div>
+          <div class="i-value">한 잔 한 잔, 손으로 내립니다</div>
+          <div class="i-label" style="margin-top:4px;">기계에 맡기지 않고 주문마다 정성껏 핸드드립으로 내려 드려요.</div>
         </div>
-        <div class="feature">
-          <span class="ico">🥐</span>
-          <div>
-            <h3>그날 구운 스콘만 냅니다</h3>
-            <p>매일 아침 오븐에서 갓 구워, 가장 맛있을 때 자신 있게 내어 드립니다.</p>
-          </div>
+      </div>
+      <div class="info-card">
+        <span class="i-ico">🥐</span>
+        <div>
+          <div class="i-value">그날 구운 스콘만 냅니다</div>
+          <div class="i-label" style="margin-top:4px;">매일 아침 오븐에서 갓 구워, 가장 맛있을 때 자신 있게 내어 드립니다.</div>
         </div>
-        <div class="feature">
-          <span class="ico">🪑</span>
-          <div>
-            <h3>혼자여도 괜찮은 자리</h3>
-            <p>편안한 1인 좌석에서 눈치 보지 않고 나만의 시간을 보내세요.</p>
-          </div>
+      </div>
+      <div class="info-card">
+        <span class="i-ico">🪑</span>
+        <div>
+          <div class="i-value">혼자여도 괜찮은 자리</div>
+          <div class="i-label" style="margin-top:4px;">편안한 1인 좌석에서 눈치 보지 않고 나만의 시간을 보내세요.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 2. 대표 메뉴 -->
-  <section>
-    <div class="wrap">
-      <h2 class="section-title">오늘의 메뉴</h2>
-      <p class="section-sub">신선한 재료로, 매일 같은 마음을 담아 준비합니다</p>
-      <div class="menu-grid">
-        <div class="menu-card">
-          <div>
-            <div class="name">핸드드립 커피</div>
-            <div class="desc">직접 내린 오늘의 스페셜티</div>
-          </div>
-          <div class="price">5,500원</div>
+  <!-- 오늘의 메뉴 -->
+  <section class="menu-band" id="menu-section">
+    <div class="menu-inner">
+      <h2>오늘의 메뉴</h2>
+      <p class="menu-sub">신선한 재료로, 매일 같은 마음을 담아 준비합니다</p>
+      <div class="menu-grid" id="menu-grid"></div>
+    </div>
+  </section>
+
+  <!-- 영업시간 · 픽업 가능 시간 -->
+  <section class="section" id="hours">
+    <h2 class="section-title">영업 · 픽업 안내</h2>
+    <p class="section-sub">출근길에 딱 맞는 시간, 미리 확인하세요</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="i-ico">🕗</span>
+        <div>
+          <div class="i-label">영업시간</div>
+          <div class="i-value">화~일 08:00 – 20:00<br /><span class="i-note">월요일은 편히 쉬어갑니다</span></div>
         </div>
-        <div class="menu-card">
-          <div>
-            <div class="name">오늘의 원두</div>
-            <div class="desc">매일 바뀌는 추천 원두</div>
-          </div>
-          <div class="price">4,500원</div>
-        </div>
-        <div class="menu-card">
-          <div>
-            <div class="name">수제 스콘</div>
-            <div class="desc">당일 구운 담백한 스콘</div>
-          </div>
-          <div class="price">3,500원</div>
-        </div>
-        <div class="menu-card">
-          <div>
-            <div class="name">계절 과일 에이드</div>
-            <div class="desc">제철 과일로 만든 청량한 한 잔</div>
-          </div>
-          <div class="price">6,000원</div>
+      </div>
+      <div class="info-card">
+        <span class="i-ico">☕</span>
+        <div>
+          <div class="i-label">픽업 가능 시간</div>
+          <div class="i-value">08:00 – 19:30<br /><span class="i-note">출근 전 예약은 07:30부터 접수해요</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. 위치 & 영업시간 -->
-  <section>
-    <div class="wrap">
-      <h2 class="section-title">찾아오시는 길</h2>
-      <p class="section-sub">망원역 2번 출구에서 천천히 걸어 6분이면 도착해요</p>
-      <div class="info-box">
-        <div class="info-row">
-          <span class="ico">📍</span>
-          <div>
-            <div class="label">오시는 길</div>
-            <div class="value">서울 망원동 골목 끝<br />망원역 2번 출구 도보 6분</div>
-          </div>
+  <!-- 예약 폼 · 목록 -->
+  <h2 class="section-title" style="padding-top: 28px;">픽업 예약하기</h2>
+  <p class="section-sub">아래에서 메뉴와 픽업 시간을 골라 예약해 주세요</p>
+  <main class="layout" id="reserve">
+    <!-- 예약 입력 폼 -->
+    <section class="card">
+      <h2>☕ 내 커피 예약하기</h2>
+      <form id="reservation-form" novalidate>
+        <div class="field">
+          <label for="menu">메뉴 선택</label>
+          <select id="menu">
+            <option value="">메뉴를 선택하세요</option>
+          </select>
+          <span class="error-msg">필수 항목입니다</span>
         </div>
-        <div class="info-row hours">
-          <span class="ico">🕗</span>
-          <div>
-            <div class="label">영업시간</div>
-            <div class="value">화~일 08:00 – 20:00<br /><span class="closed">월요일은 편히 쉬어갑니다</span></div>
-          </div>
+
+        <div class="field">
+          <label for="name">이름</label>
+          <input type="text" id="name" placeholder="홍길동" />
+          <span class="error-msg">필수 항목입니다</span>
+        </div>
+
+        <div class="field">
+          <label for="phone">연락처</label>
+          <input type="tel" id="phone" placeholder="010-1234-5678" />
+          <span class="error-msg">필수 항목입니다</span>
+        </div>
+
+        <div class="field">
+          <label for="date">픽업 날짜</label>
+          <input type="date" id="date" />
+          <span class="error-msg">필수 항목입니다</span>
+        </div>
+
+        <div class="field">
+          <label for="time">픽업 시간</label>
+          <input type="time" id="time" />
+          <span class="error-msg">필수 항목입니다</span>
+        </div>
+
+        <div class="field">
+          <label for="people">인원수</label>
+          <input type="number" id="people" min="1" value="1" />
+          <span class="error-msg">필수 항목입니다</span>
+        </div>
+
+        <button type="submit" class="btn-add" id="submit-btn">예약 추가</button>
+      </form>
+    </section>
+
+    <!-- 예약 목록 -->
+    <section class="card">
+      <div class="list-header">
+        <h2>📋 내 예약 내역</h2>
+        <div class="list-actions">
+          <span class="count" id="count">0건</span>
+          <button type="button" class="btn-reset" id="reset-btn">내역 비우기</button>
         </div>
       </div>
-    </div>
-  </section>
+      <ul id="list"></ul>
+    </section>
+  </main>
 
-  <!-- 4. 연락 / 예약 -->
-  <section>
-    <div class="contact">
-      <h2>따뜻한 커피 한 잔, 준비해 둘게요</h2>
-      <p>예약이나 궁금한 점이 있으시면 언제든 편하게 연락 주세요.<br />반갑게 맞이하겠습니다.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="tel:02-123-4567">📞 02-123-4567</a>
-        <a class="btn btn-secondary" href="https://instagram.com/morningbrew_official" target="_blank" rel="noopener">@morningbrew_official</a>
-        <a class="btn btn-email" href="mailto:hello@morningbrew.example.com">✉️ hello@morningbrew.example.com</a>
+  <!-- 위치 · 연락 -->
+  <section class="section" id="location">
+    <h2 class="section-title">위치 · 연락처</h2>
+    <p class="section-sub">망원역 2번 출구에서 천천히 걸어 6분이면 도착해요</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="i-ico">📍</span>
+        <div>
+          <div class="i-label">오시는 길</div>
+          <div class="i-value">서울 망원동 골목 끝<br /><span class="i-note">망원역 2번 출구 도보 6분</span></div>
+        </div>
+      </div>
+      <div class="info-card">
+        <span class="i-ico">📞</span>
+        <div>
+          <div class="i-label">전화 · 문의</div>
+          <div class="i-value">
+            <a href="tel:02-123-4567">02-123-4567</a><br />
+            <a href="mailto:hello@morningbrew.example.com">hello@morningbrew.example.com</a><br />
+            <a href="https://instagram.com/morningbrew_official" target="_blank" rel="noopener">@morningbrew_official</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <p><span class="brand">모닝브루</span> · 서울 망원동</p>
-    <p>매일 아침 직접 내리는 핸드드립 커피</p>
+    <p><span class="f-brand">모닝브루</span> · 서울 망원동</p>
+    <p>매일 아침 직접 내리는 핸드드립 커피 · 출근길 픽업 예약</p>
   </footer>
 
+  <!-- 성공 안내 -->
+  <div class="toast" id="toast">✅ 예약이 추가되었습니다!</div>
+
+  <script>
+    // 오늘의 메뉴 (메뉴 카드와 예약 폼이 함께 쓰는 단일 소스)
+    const MENU = [
+      { id: "handdrip", emoji: "☕", name: "핸드드립 커피", desc: "직접 내린 오늘의 스페셜티", price: 5500 },
+      { id: "beans",    emoji: "🫘", name: "오늘의 원두",   desc: "매일 바뀌는 추천 원두",     price: 4500 },
+      { id: "scone",    emoji: "🥐", name: "수제 스콘",     desc: "당일 구운 담백한 스콘",     price: 3500 },
+      { id: "ade",      emoji: "🍹", name: "계절 과일 에이드", desc: "제철 과일로 만든 청량한 한 잔", price: 6000 },
+    ];
+
+    // localStorage 저장소
+    const STORAGE_KEY = "morningbrew.reservations";
+    let reservations = [];
+    let nextId = 1;
+
+    const form = document.getElementById("reservation-form");
+    const listEl = document.getElementById("list");
+    const countEl = document.getElementById("count");
+    const submitBtn = document.getElementById("submit-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    const toast = document.getElementById("toast");
+    const menuGrid = document.getElementById("menu-grid");
+    const menuSelect = document.getElementById("menu");
+    const fields = ["menu", "name", "phone", "date", "time", "people"];
+
+    // 메뉴 카드 + 폼 선택지를 같은 데이터로 그린다
+    function renderMenu() {
+      menuGrid.innerHTML = "";
+      MENU.forEach((m) => {
+        const card = document.createElement("div");
+        card.className = "menu-item";
+        card.innerHTML =
+          '<div class="m-emoji">' + m.emoji + "</div>" +
+          '<div class="m-name">' + escapeHtml(m.name) + "</div>" +
+          '<div class="m-desc">' + escapeHtml(m.desc) + "</div>" +
+          '<div class="m-price">' + m.price.toLocaleString() + "원</div>";
+        menuGrid.appendChild(card);
+
+        const opt = document.createElement("option");
+        opt.value = m.id;
+        opt.textContent = m.name + " · " + m.price.toLocaleString() + "원";
+        menuSelect.appendChild(opt);
+      });
+    }
+
+    // localStorage에서 기존 예약 불러오기
+    function load() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (Array.isArray(saved)) {
+          reservations = saved;
+          // 다음 id는 기존 최대 id + 1로 이어서 부여
+          nextId = reservations.reduce((max, r) => Math.max(max, r.id), 0) + 1;
+        }
+      } catch (e) {
+        reservations = [];
+      }
+    }
+
+    // 현재 예약 목록을 localStorage에 저장
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reservations));
+    }
+
+    // 입력/선택 시 해당 칸의 오류 표시 즉시 해제
+    fields.forEach((id) => {
+      const el = document.getElementById(id);
+      el.addEventListener("input", () => setFieldError(id, false));
+      el.addEventListener("change", () => setFieldError(id, false));
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // 1) 빈 칸 검사
+      let hasError = false;
+      const values = {};
+      fields.forEach((id) => {
+        const value = document.getElementById(id).value.trim();
+        values[id] = value;
+        const empty = value === "";
+        setFieldError(id, empty);
+        if (empty) hasError = true;
+      });
+      if (hasError) return;
+
+      // 2) 저장 중 표시 → 성공 안내
+      submitBtn.disabled = true;
+      submitBtn.textContent = "저장 중...";
+
+      setTimeout(() => {
+        const picked = MENU.find((m) => m.id === values.menu);
+        reservations.push({
+          id: nextId++,
+          menu: picked ? picked.name : "",
+          price: picked ? picked.price : 0,
+          name: values.name,
+          phone: values.phone,
+          date: values.date,
+          time: values.time,
+          people: values.people,
+        });
+        save();
+
+        form.reset();
+        document.getElementById("people").value = 1;
+        document.getElementById("date").value = document.getElementById("date").min;
+        render();
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "예약 추가";
+        showToast();
+      }, 600);
+    });
+
+    function setFieldError(id, show) {
+      const input = document.getElementById(id);
+      input.classList.toggle("invalid", show);
+      input.closest(".field").classList.toggle("show-error", show);
+    }
+
+    let toastTimer = null;
+    function showToast() {
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+
+    function deleteReservation(id) {
+      if (!confirm("이 예약을 삭제할까요?")) return;
+      reservations = reservations.filter((r) => r.id !== id);
+      save();
+      render();
+    }
+
+    // 전체 초기화
+    resetBtn.addEventListener("click", function () {
+      if (reservations.length === 0) return;
+      if (!confirm("내 예약 내역을 모두 지울까요? 이 작업은 되돌릴 수 없습니다.")) return;
+      reservations = [];
+      save();
+      render();
+    });
+
+    function render() {
+      countEl.textContent = reservations.length + "건";
+      resetBtn.disabled = reservations.length === 0;
+
+      if (reservations.length === 0) {
+        listEl.innerHTML =
+          '<li class="empty"><span class="icon">🍃</span>' +
+          "아직 예약이 없습니다. 첫 예약을 추가해 보세요!</li>";
+        return;
+      }
+
+      listEl.innerHTML = "";
+      reservations.forEach((r) => {
+        const li = document.createElement("li");
+        li.className = "reservation";
+
+        const info = document.createElement("div");
+        info.className = "res-info";
+
+        const name = document.createElement("div");
+        name.className = "res-name";
+        // 주문 메뉴를 대표로 보여주고, 없으면(이전 예약) 이름을 표시
+        name.textContent = r.menu ? r.menu : r.name;
+
+        const meta = document.createElement("div");
+        meta.className = "res-meta";
+        const parts = [];
+        if (r.price) parts.push("💳 " + r.price.toLocaleString() + "원");
+        if (r.date) parts.push("📅 " + escapeHtml(r.date));
+        parts.push("🕒 " + escapeHtml(r.time));
+        parts.push("👥 " + escapeHtml(r.people) + "명");
+        parts.push("🙍 " + escapeHtml(r.name));
+        parts.push("📞 " + escapeHtml(r.phone));
+        meta.innerHTML = parts.map((p) => "<span>" + p + "</span>").join("");
+
+        info.appendChild(name);
+        info.appendChild(meta);
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-del";
+        delBtn.textContent = "삭제";
+        delBtn.addEventListener("click", () => deleteReservation(r.id));
+
+        li.appendChild(info);
+        li.appendChild(delBtn);
+        listEl.appendChild(li);
+      });
+    }
+
+    // 사용자 입력이 HTML로 해석되지 않도록 처리
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // 픽업 날짜는 오늘 이후만 선택 가능하도록
+    (function setDateFloor() {
+      const t = new Date();
+      const yyyy = t.getFullYear();
+      const mm = String(t.getMonth() + 1).padStart(2, "0");
+      const dd = String(t.getDate()).padStart(2, "0");
+      const today = yyyy + "-" + mm + "-" + dd;
+      const dateInput = document.getElementById("date");
+      dateInput.min = today;
+      dateInput.value = today; // 기본값: 오늘
+    })();
+
+    // 페이지가 처음 열릴 때 메뉴를 그리고, 저장된 예약을 불러와 표시
+    renderMenu();
+    load();
+    render();
+  </script>
 </body>
 </html>
